@@ -5,7 +5,7 @@ import CountUp from 'react-countup';
 import cx from 'classnames';
 import image from './imageWorld.png';
 
-const Cards = ({data:{confirmed,recovered,deaths,lastUpdate},countryData:{population,region,flag},country}) => {
+const Cards = ({data:{confirmed,recovered,deaths,lastUpdate},countryData:{population,region,flag,area,capital},country}) => {
     
     if(!confirmed){
         return 'Loading...'
@@ -14,19 +14,47 @@ const Cards = ({data:{confirmed,recovered,deaths,lastUpdate},countryData:{popula
     if(!country){
         population = 7800000000
         country = "World"
-        region = "NA"
+        region = "Earth"
+        area = "510 million"
     }
 
     let bgImage = image;
-    if(country!='World'){
+    if(country!=='World'){
         bgImage = flag;
     }
 
-    console.log(bgImage);
+    console.log();
 
     return(
         <div className={styles.container}>
             <Grid container spacing={0} justify="center"> 
+                <Grid item component={Card} xs={12} md={2} className={cx(styles.card,styles.details)}>
+                    <Card >
+                        <CardMedia
+                        className={styles.media}
+                        image={
+                            bgImage
+                        }
+                        />
+                        <CardContent>
+                            <Typography color="textSecondary" gutterBottom>Population</Typography>
+                            <Typography variant="h6" >
+                                <CountUp start = {0} end = {population} duration = {2.5} separator="," />                            
+                            </Typography>
+                            <br/>
+                            <Grid container justify="space-between">  
+                                <Typography inline align="left" color="textSecondary">Area</Typography>
+                                <Typography inline variant="body2" align="right">
+                                    {area} km&sup2;
+                                </Typography>                            
+                            </Grid>                            
+                            <Grid container justify="space-between">
+                                <Typography inline align="right" color="textSecondary">Region</Typography>                            
+                                <Typography inline variant="body2" align="right">{region}</Typography>
+                            </Grid>                            
+                        </CardContent>
+                    </Card>
+                </Grid>
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card,styles.infected)}>
                     <CardContent>
                         <Typography color="textSecondary" gutterBottom>Infected</Typography>
@@ -62,25 +90,7 @@ const Cards = ({data:{confirmed,recovered,deaths,lastUpdate},countryData:{popula
                         <br/><br/>
                         <Typography variant="body1">Number of deaths from COVID-19</Typography>
                     </CardContent>
-                </Grid>
-                <Grid item component={Card} xs={12} md={2} className={cx(styles.card,styles.details)}>
-                <Card >
-                    <CardMedia
-                    className={styles.media}
-                    image={
-                        bgImage
-                    }
-                    />
-                    <CardContent>
-                        <Typography color="textSecondary" gutterBottom>Population in {country}</Typography>
-                        <Typography variant="h6" >
-                            <CountUp start = {0} end = {population} duration = {2.5} separator="," />                            
-                        </Typography>
-                        <Typography color="textSecondary">Region</Typography>
-                        <Typography variant="body2">{region}</Typography>
-                    </CardContent>
-                    </Card>
-                </Grid>
+                </Grid>                
             </Grid>
         </div>
     )
