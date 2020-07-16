@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-
 import {Cards,Chart,CountryPicker} from './components'
 import styles from './App.module.css';
 import {fetchData,fetchCountryDetails} from './api';
-
 import image from './images/corona.PNG';
+import ErrorBoundry from './components/ErrorBoundry';
 
 class App extends Component{
     
@@ -31,10 +30,12 @@ class App extends Component{
         
         return(
             <div className={styles.container}>
-                <img className={styles.image} src={image} alt="COVID-19" />
-                <CountryPicker handleCountryChange={this.handleCountryChange}/>
-                <Cards data={data} countryData = {countryData} country = {country}/>                
-                <Chart data={data} country={country}/>
+                <img className={styles.image} src={image} alt="COVID-19" />   
+                <ErrorBoundry country = {country}> 
+                    <CountryPicker handleCountryChange={this.handleCountryChange}/>
+                    <Cards data={data} countryData = {countryData} country = {country}/>                 
+                    <Chart data={data} country={country}/>
+                </ErrorBoundry>
             </div>
         )
     }

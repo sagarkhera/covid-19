@@ -55,7 +55,13 @@ export const fetchCountryDetails = async (country) => {
 
     try{
         const {data} = await axios.get(url)
-        return data[0];
+        if(country==="India"){
+            return data[1];
+        }
+        else{
+            return data[0];
+        }
+        
     }catch(error){
         console.log(error)
     }
