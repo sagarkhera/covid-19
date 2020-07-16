@@ -43,14 +43,12 @@ const Cards = ({data:{confirmed,recovered,deaths,lastUpdate},countryData:{popula
                             </Typography>
                             <br/>
                             <Grid container justify="space-between">  
-                                <Typography inline align="left" color="textSecondary">Area</Typography>
-                                <Typography inline variant="body2" align="right">
-                                    {area} km&sup2;
-                                </Typography>                            
+                                <Typography inline="true" align="left" color="textSecondary">Area</Typography>
+                                <Typography inline="true" variant="body2" align="right">{area} km&sup2;</Typography>                            
                             </Grid>                            
                             <Grid container justify="space-between">
-                                <Typography inline align="right" color="textSecondary">Region</Typography>                            
-                                <Typography inline variant="body2" align="right">{region}</Typography>
+                                <Typography inline="true" align="right" color="textSecondary">Region</Typography>                            
+                                <Typography inline="true" variant="body2" align="right">{region}</Typography>
                             </Grid>                            
                         </CardContent>
                     </Card>
