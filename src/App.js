@@ -10,7 +10,8 @@ class App extends Component{
     state = {
         data: {},
         countryData: {},
-        country:''
+        country:'',
+        error: null
     }
 
     async componentDidMount(){
@@ -20,21 +21,36 @@ class App extends Component{
     }
 
     handleCountryChange = async (country) => {
-        const fetchedData = await fetchData(country);
-        const popData = await fetchCountryDetails(country);
-        this.setState({data: fetchedData, country: country,countryData:popData})
+        try{
+            const fetchedData = await fetchData(country);
+            const popData = await fetchCountryDetails(country);            
+            this.setState({data: fetchedData, country: country,countryData:popData})
+        }
+        catch(error){
+            console.log(error)
+            this.setState({error});
+        }
+        
     }
 
     render(){
-        const {data,country,countryData} = this.state;
-        
+        const {data,country,countryData,error} = this.state;
+        let card;
+        let chart;
+        if(data===undefined || countryData===undefined || error){
+            card = <h1>Country '{country}' not found in records. Please reload page & try again with another country!</h1>
+        }
+        else{
+            card = <Cards data={data} countryData = {countryData} country = {country}/>
+            chart = <Chart data={data} country={country}/>
+        }
         return(
             <div className={styles.container}>
                 <img className={styles.image} src={image} alt="COVID-19" />   
                 <ErrorBoundry country = {country}> 
                     <CountryPicker handleCountryChange={this.handleCountryChange}/>
-                    <Cards data={data} countryData = {countryData} country = {country}/>                 
-                    <Chart data={data} country={country}/>
+                    {card}
+                    {chart}
                 </ErrorBoundry>
             </div>
         )
